@@ -1,22 +1,50 @@
+// Game Info
 let theDeck = []
 let theDiscard = []
-let chipsTotal = 1000
+let chipsTotal = 2000
 
+// Player Info
 let playerTotal = null
 let playerWin = false
+let playerPairWin = false
 let playerHand = []
-let playerBet = 0
 let playerTotalCards = 0
 
+// Banker Info
 let bankerTotal = null
 let bankerWin = false
+let bankerPairWin = false
 let bankerHand = []
 let bankerTotalCards = 0
 
 let resultTie = false
 
-// Declare card elements
+// Chips Input Info
+let chipInput_PP = 20
+let chipInput_BP = 10
+let chipInput_PN9 = 10
+let chipInput_PN8 = 10
+let chipInput_BN9 = 0
+let chipInput_BN8 = 0
+let chipInput_P = 10
+let chipInput_B = 0
+let chipInput_T = 0
+let playerChipInput = chipInput_PP + chipInput_BP + chipInput_PN9 + chipInput_PN8 + chipInput_BN9 + chipInput_BN8 + chipInput_P + chipInput_B + chipInput_T
 
+// Payout Info
+let playerPairBet = 0
+let bankerPairBet = 0
+let playerBet = 0
+let bankerBet = 0
+let tieBet = 0
+let playerNatural9 = 0
+let playerNatural8 = 0
+let bankerNatural9 = 0
+let bankerNatural8 = 0
+
+
+
+// Declare card elements
 let suits = ["spade", "diamond", "club", "heart"]
 let values = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
 let suitImg = ["S", "D", "C", "H"]
@@ -24,7 +52,6 @@ let valueImg = [ "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K
 let points = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 
 // Create 4 decks of cards
-
 function createDeck() {
     for (let x = 0; x < 4; x++) {
         for (let i = 0; i < suits.length; i++) {
@@ -42,7 +69,6 @@ function createDeck() {
 }
 
 // Shuffle the cards
-
 function shuffleCards() {
     for (let i = theDeck.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * i)
@@ -52,8 +78,8 @@ function shuffleCards() {
     }
 }
 
-// Reset the game and empty the deck
-function restartGame() {
+// Reset and empty the deck and create new deck
+function restartDeck() {
     theDeck = []
     theDiscard = []
     createDeck()
@@ -62,28 +88,35 @@ function restartGame() {
 
 // Dealt to player's hand and banker's hand
 function dealCard() {
+    discardHand()
+    if (theDeck.length < 6) {
+        // show no more cards left.
+        console.log("Let's shuffle the deck!")
+        restartDeck()
+    }
     for (let i = 0; i < 2; i++) {
         playerHand.push(theDeck.shift())
         playerTotalCards++
         bankerHand.push(theDeck.shift())
         bankerTotalCards++
     }
+    initialTotalPoints()
 }
-// add function to check for insufficient card and restart createDeck
 
 // Discard player's hand and banker's hand
 function discardHand() {
     for (let i = playerHand.length - 1; i >= 0; i--) {
         let burnCard = playerHand.splice(playerHand[i], 1)
         theDiscard.push(burnCard)
-        playerTotalCards = 0 // Check if this work
+        playerTotalCards = 0 
     }
     for (let i = bankerHand.length - 1; i >= 0; i--) {
         let burnCard = bankerHand.splice(theDiscard[i], 1)
         theDiscard.push(burnCard)
-        bankerTotalCards = 0 // Check if this work
+        bankerTotalCards = 0 
     }
 }
+
 
 //----------------------------------------------------------------------------------//
 
@@ -98,7 +131,8 @@ function initialTotalPoints() {
 function checkPlayerPair() {
     console.log("checkPlayerPair activated")
     if (playerHand[0].value === playerHand[1].value) {
-        // player pair wagers win
+        playerPairWin = true
+        playerPairBet++
         console.log("Player pair")
     }
     checkBankerPair()
@@ -107,7 +141,8 @@ function checkPlayerPair() {
 function checkBankerPair() {
     console.log("checkBankerPair activated")
     if (bankerHand[0].value === bankerHand[1].value) {
-        //Banker pair wagers win
+        bankerPairWin = true
+        bankerPairBet++
         console.log("Banker pair")
     }
     checkNatural()
@@ -117,20 +152,30 @@ function checkNatural() {
     console.log("checkNatural activated")
     if (playerTotal === 9 && bankerTotal === 9) {
         resultTie = true
+        tieBet++
+        playerNatural9++
+        bankerNatural9++
     } else if (playerTotal === 8 && bankerTotal === 8) {
         resultTie = true
+        tieBet++
+        playerNatural8++
+        bankerNatural8++
     } else if (playerTotal === 9) {
-        //player natural 9 wagers win
-        playerWin = true 
-    } else if (bankerTotal === 9) {
-        //banker natural 9 wagers win
-        bankerWin = true
-    } else if (playerTotal === 8 && bankerTotal < 8) {
-        //player natural 8 wagers win
         playerWin = true
-    } else if (bankerTotal === 8 && playerTotal < 8) {
-        //banker natural 8 wagers win
+        playerBet++
+        playerNatural9++
+    } else if (bankerTotal === 9) {
         bankerWin = true
+        bankerBet++
+        bankerNatural9++
+    } else if (playerTotal === 8 && bankerTotal < 8) {
+        playerWin = true
+        playerBet++
+        playerNatural8++
+    } else if (bankerTotal === 8 && playerTotal < 8) {
+        bankerWin = true
+        bankerBet++
+        bankerNatural8++
     } else {
         drawThirdCards()
     }
@@ -190,37 +235,104 @@ function finalHands() {
     console.log("finalHand activated")
     if (playerTotal > bankerTotal) {
         playerWin = true
+        playerBet++
     } else if (playerTotal < bankerTotal) {
         bankerWin = true
+        bankerBet++
     } else if (playerTotal === bankerTotal) {
         resultTie = true
+        tieBet++
     }
+    chipsCount()
 }
 // result modal and payout structure
 
+function chipsCount() {
+    chipsTotal -= playerChipInput
+    if (playerPairWin === true) {
+        chipsTotal += (chipInput_PP * playerPairBet * 11)
+    }
+    if (bankerPairWin === true) {
+        chipsTotal += (chipInput_BP * bankerPairBet * 11)
+    }
+    if (playerTotal === 9 || playerTotal === 8) {
+        chipsTotal += (chipInput_PN9 * playerNatural9 * 8)
+        chipsTotal += (chipInput_PN8 * playerNatural8 * 8)
+    } else if (bankerTotal === 9 || bankerTotal === 8) {
+        chipsTotal += (chipInput_BN9 * bankerNatural9 * 8)
+        chipsTotal += (chipInput_BN8 * bankerNatural8 * 8)
+    }
+    if (playerWin === true) {
+        chipsTotal += (chipInput_P * playerBet * 1)
+    } else if (bankerWin === true) {
+        chipsTotal += (chipInput_B * bankerBet * 1)
+    } else if (resultTie === true) {
+        chipsTotal += (chipInput_T * tieBet * 8)
+    }
+    chipsCountReset()
+}
 
-createDeck()
-shuffleCards()
+function chipsCountReset() {
+    playerChipInput = 0
+    playerPairBet = 0
+    bankerPairBet = 0
+    playerBet = 0
+    bankerBet = 0
+    tieBet = 0
+    playerNatural9 = 0
+    playerNatural8 = 0
+    bankerNatural9 = 0
+    bankerNatural8 = 0
+    chipsCheck()
+}
+
+// Reset chips
+function chipsCheck() {
+    if (chipsTotal === 0) {
+        stopTheGame()
+    }
+}
+
+function stopTheGame() {
+    theDeck = []
+    theDiscard = []
+    restartGame()
+}
+
+function restartGame() {
+    chipsTotal = 2000
+    playerTotal = null
+    bankerTotal = null
+    playerWin = false
+    bankerWin = false
+    resultTie = false
+    playerPairWin = false
+    bankerPairWin = false
+    dealCard()
+}
+
+//----------------------------------------------------------------------------------//
+
+
+//  Gameplay
+// initialTotalPoints()
+function gameInfo() {
+    console.log(playerHand)
+    console.log(bankerHand)
+    console.log("playerTotalCards: " + playerTotalCards)
+    console.log("bankerTotalCards: " + bankerTotalCards)
+    console.log("Player: " + playerWin)
+    console.log("Banker: " + bankerWin)
+    console.log("Tie: " + resultTie)
+    console.log("Player points: " + playerTotal)
+    console.log("Banker points: " + bankerTotal)
+    console.log(theDeck.length)
+}
+
 dealCard()
-initialTotalPoints()
-console.log(playerHand)
-console.log(bankerHand)
-console.log("playerTotalCards: " + playerTotalCards)
-console.log("bankerTotalCards: " + bankerTotalCards)
-console.log("Player: " + playerWin)
-console.log("Banker: " + bankerWin)
-console.log("Tie: " + resultTie)
-console.log("Player points: " + playerTotal)
-console.log("Banker points: " + bankerTotal)
+gameInfo()
+chipsInfo()
 
-// console.log(theDeck.length)
-// discardHand()
-// console.log(playerHand)
-// console.log(bankerHand)
-// console.log(theDeck.length)
-// console.log(theDiscard)
-// dealCard()
-// console.log(playerHand)
-// console.log(bankerHand)
-// console.log(theDeck.length)
-// console.log(theDiscard.length)
+function chipsInfo() {
+    console.log(chipsTotal)
+}
