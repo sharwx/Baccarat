@@ -20,14 +20,14 @@ let bankerTotalCards = 0
 let resultTie = false
 
 // Chips Input Info
-let chipInput_PP = 20
-let chipInput_BP = 10
-let chipInput_PN9 = 10
-let chipInput_PN8 = 10
+let chipInput_PP = 0
+let chipInput_BP = 0
+let chipInput_PN9 = 0
+let chipInput_PN8 = 0
 let chipInput_BN9 = 0
 let chipInput_BN8 = 0
-let chipInput_P = 10
-let chipInput_B = 0
+let chipInput_P = 1500
+let chipInput_B = 500
 let chipInput_T = 0
 let playerChipInput = chipInput_PP + chipInput_BP + chipInput_PN9 + chipInput_PN8 + chipInput_BN9 + chipInput_BN8 + chipInput_P + chipInput_B + chipInput_T
 
@@ -41,8 +41,6 @@ let playerNatural9 = 0
 let playerNatural8 = 0
 let bankerNatural9 = 0
 let bankerNatural8 = 0
-
-
 
 // Declare card elements
 let suits = ["spade", "diamond", "club", "heart"]
@@ -116,7 +114,6 @@ function discardHand() {
         bankerTotalCards = 0 
     }
 }
-
 
 //----------------------------------------------------------------------------------//
 
@@ -243,37 +240,38 @@ function finalHands() {
         resultTie = true
         tieBet++
     }
+    gameInfo()
     chipsCount()
 }
-// result modal and payout structure
 
 function chipsCount() {
+    console.log("Chips count start")
     chipsTotal -= playerChipInput
     if (playerPairWin === true) {
-        chipsTotal += (chipInput_PP * playerPairBet * 11)
+        chipsTotal += (chipInput_PP * playerPairBet * 12)
     }
     if (bankerPairWin === true) {
-        chipsTotal += (chipInput_BP * bankerPairBet * 11)
+        chipsTotal += (chipInput_BP * bankerPairBet * 12)
     }
     if (playerTotal === 9 || playerTotal === 8) {
-        chipsTotal += (chipInput_PN9 * playerNatural9 * 8)
-        chipsTotal += (chipInput_PN8 * playerNatural8 * 8)
+        chipsTotal += (chipInput_PN9 * playerNatural9 * 9)
+        chipsTotal += (chipInput_PN8 * playerNatural8 * 9)
     } else if (bankerTotal === 9 || bankerTotal === 8) {
-        chipsTotal += (chipInput_BN9 * bankerNatural9 * 8)
-        chipsTotal += (chipInput_BN8 * bankerNatural8 * 8)
+        chipsTotal += (chipInput_BN9 * bankerNatural9 * 9)
+        chipsTotal += (chipInput_BN8 * bankerNatural8 * 9)
     }
     if (playerWin === true) {
-        chipsTotal += (chipInput_P * playerBet * 1)
+        chipsTotal += (chipInput_P * playerBet * 2)
     } else if (bankerWin === true) {
-        chipsTotal += (chipInput_B * bankerBet * 1)
+        chipsTotal += (chipInput_B * bankerBet * 2)
     } else if (resultTie === true) {
-        chipsTotal += (chipInput_T * tieBet * 8)
+        chipsTotal += (chipInput_T * tieBet * 9)
     }
     chipsCountReset()
 }
 
 function chipsCountReset() {
-    playerChipInput = 0
+    console.log("Chip count reset")
     playerPairBet = 0
     bankerPairBet = 0
     playerBet = 0
@@ -283,15 +281,25 @@ function chipsCountReset() {
     playerNatural8 = 0
     bankerNatural9 = 0
     bankerNatural8 = 0
+
+    playerTotal = null
+    bankerTotal = null
+    playerWin = false
+    bankerWin = false
+    resultTie = false
+    playerPairWin = false
+    bankerPairWin = false
+    
     chipsCheck()
 }
 
-// Reset chips
 function chipsCheck() {
-    if (chipsTotal === 0) {
+    if (chipsTotal <= 0) {
         stopTheGame()
+    } else {
+    console.log("Game continue")
     }
-}
+} 
 
 function stopTheGame() {
     theDeck = []
@@ -301,21 +309,13 @@ function stopTheGame() {
 
 function restartGame() {
     chipsTotal = 2000
-    playerTotal = null
-    bankerTotal = null
-    playerWin = false
-    bankerWin = false
-    resultTie = false
-    playerPairWin = false
-    bankerPairWin = false
-    dealCard()
+    console.log("2000 added")
 }
 
 //----------------------------------------------------------------------------------//
 
 
 //  Gameplay
-// initialTotalPoints()
 function gameInfo() {
     console.log(playerHand)
     console.log(bankerHand)
@@ -329,10 +329,11 @@ function gameInfo() {
     console.log(theDeck.length)
 }
 
-dealCard()
-gameInfo()
-chipsInfo()
-
 function chipsInfo() {
     console.log(chipsTotal)
 }
+
+chipsInfo()
+dealCard()
+// gameInfo()
+chipsInfo()
