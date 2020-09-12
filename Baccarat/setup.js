@@ -20,16 +20,8 @@ let bankerTotalCards = 0
 let resultTie = false
 
 // Chips Input Info
-let chipInput_PP = 0
-let chipInput_BP = 0
-let chipInput_PN9 = 0
-let chipInput_PN8 = 0
-let chipInput_BN9 = 0
-let chipInput_BN8 = 0
-let chipInput_P = 1500
-let chipInput_B = 500
-let chipInput_T = 0
-let playerChipInput = chipInput_PP + chipInput_BP + chipInput_PN9 + chipInput_PN8 + chipInput_BN9 + chipInput_BN8 + chipInput_P + chipInput_B + chipInput_T
+let chipInput_player = document.getElementById("chipInput_P")
+let chipInput_banker = document.getElementById("chipInput_B")
 
 // Payout Info
 let playerPairBet = 0
@@ -41,6 +33,15 @@ let playerNatural9 = 0
 let playerNatural8 = 0
 let bankerNatural9 = 0
 let bankerNatural8 = 0
+
+//----------------------------------------------------------------------------------//
+
+let dealBtn = document.getElementById("deal-btn")
+let restartBtn = document.getElementById("restart-btn")
+let playBtn = document.getElementById("play-btn")
+let showChips = document.getElementById("chip-title")
+
+//----------------------------------------------------------------------------------//
 
 // Declare card elements
 let suits = ["spade", "diamond", "club", "heart"]
@@ -246,7 +247,18 @@ function finalHands() {
 
 function chipsCount() {
     console.log("Chips count start")
+    let chipInput_PP = parseInt(document.getElementById("chipInput_PP").value, 10)
+    let chipInput_BP = parseInt(document.getElementById("chipInput_BP").value, 10)
+    let chipInput_PN9 = parseInt(document.getElementById("chipInput_PN9").value, 10)
+    let chipInput_PN8 = parseInt(document.getElementById("chipInput_PN8").value, 10)
+    let chipInput_BN9 = parseInt(document.getElementById("chipInput_BN9").value, 10)
+    let chipInput_BN8 = parseInt(document.getElementById("chipInput_BN8").value, 10)
+    let chipInput_P = parseInt(document.getElementById("chipInput_P").value, 10)
+    let chipInput_B = parseInt(document.getElementById("chipInput_B").value, 10)
+    let chipInput_T = parseInt(document.getElementById("chipInput_T").value, 10)
+    let playerChipInput = chipInput_PP + chipInput_BP + chipInput_PN9 + chipInput_PN8 + chipInput_BN9 + chipInput_BN8 + chipInput_P + chipInput_B + chipInput_T
     chipsTotal -= playerChipInput
+    showChips.innerText = "$" + chipsTotal
     if (playerPairWin === true) {
         chipsTotal += (chipInput_PP * playerPairBet * 12)
     }
@@ -267,6 +279,8 @@ function chipsCount() {
     } else if (resultTie === true) {
         chipsTotal += (chipInput_T * tieBet * 9)
     }
+    showChips.innerText = ""
+    showChips.innerText = "$" + chipsTotal
     chipsCountReset()
 }
 
@@ -289,13 +303,23 @@ function chipsCountReset() {
     resultTie = false
     playerPairWin = false
     bankerPairWin = false
+
+    document.getElementById("chipInput_PP").value = 0
+    document.getElementById("chipInput_BP").value = 0
+    document.getElementById("chipInput_PN9").value = 0
+    document.getElementById("chipInput_PN8").value = 0
+    document.getElementById("chipInput_BN9").value = 0
+    document.getElementById("chipInput_BN8").value = 0
+    document.getElementById("chipInput_P").value = 0
+    document.getElementById("chipInput_B").value = 0
+    document.getElementById("chipInput_T").value = 0
     
     chipsCheck()
 }
 
 function chipsCheck() {
     if (chipsTotal <= 0) {
-        stopTheGame()
+        alert("Not enough chips! Please restart.")
     } else {
     console.log("Game continue")
     }
@@ -314,8 +338,40 @@ function restartGame() {
 
 //----------------------------------------------------------------------------------//
 
+// Play Button
+playBtn.addEventListener("click", event => {
+    dealBtn.disabled = false
+    restartBtn.disabled = false
+    playBtn.disabled = true
+    showChips.innerText = "$" + chipsTotal
+})
 
-//  Gameplay
+
+// Deal Button
+dealBtn.addEventListener("click", dealCard)
+
+// Restart Button
+restartBtn.addEventListener("click", stopTheGame)
+
+// Enable Player Natural 8/9 and Banker Natural 8/9
+
+chipInput_player.addEventListener("input", event => {
+    if (chipInput_P.value !== 0) {
+        document.getElementById("chipInput_PN9").disabled = false
+        document.getElementById("chipInput_PN8").disabled = false
+    }
+})
+
+chipInput_banker.addEventListener("input", event => {
+    if (chipInput_B.value !== 0) {
+        document.getElementById("chipInput_BN9").disabled = false
+        document.getElementById("chipInput_BN8").disabled = false  
+    }
+})
+
+//----------------------------------------------------------------------------------//
+
+//  Gameplay Check
 function gameInfo() {
     console.log(playerHand)
     console.log(bankerHand)
@@ -333,7 +389,8 @@ function chipsInfo() {
     console.log(chipsTotal)
 }
 
-chipsInfo()
-dealCard()
-// gameInfo()
-chipsInfo()
+// chipsInfo()
+// dealCard()
+// // gameInfo()
+// chipsInfo()
+
