@@ -40,6 +40,8 @@ let dealBtn = document.getElementById("deal-btn")
 let restartBtn = document.getElementById("restart-btn")
 let playBtn = document.getElementById("play-btn")
 let showChips = document.getElementById("chip-title")
+let showBankerCards = document.getElementById("bankerCards")
+let showPlayerCards = document.getElementById("playerCards")
 
 //----------------------------------------------------------------------------------//
 
@@ -107,12 +109,16 @@ function discardHand() {
     for (let i = playerHand.length - 1; i >= 0; i--) {
         let burnCard = playerHand.splice(playerHand[i], 1)
         theDiscard.push(burnCard)
-        playerTotalCards = 0 
+        playerTotalCards = 0
+        let removeBankerCards = document.getElementsByClassName("player-image")[i]
+        removeBankerCards.parentNode.removeChild(removeBankerCards)
     }
     for (let i = bankerHand.length - 1; i >= 0; i--) {
         let burnCard = bankerHand.splice(theDiscard[i], 1)
         theDiscard.push(burnCard)
-        bankerTotalCards = 0 
+        bankerTotalCards = 0
+        let removePlayerCards = document.getElementsByClassName("banker-image")[i]
+        removePlayerCards.parentNode.removeChild(removePlayerCards)
     }
 }
 
@@ -180,6 +186,7 @@ function checkNatural() {
 }
 
 function drawThirdCards() {
+    console.log("drawThirdCards activated")
     if (playerTotal <= 5) {
         playerHand.push(theDeck.shift())
         playerTotalCards++
@@ -211,6 +218,8 @@ function drawThirdCards() {
             bankerTotalCards++  
         }
     }
+    showCards()
+    console.log("showCard activated")
     finalTotalPoints()
 }
 
@@ -336,6 +345,24 @@ function restartGame() {
     console.log("2000 added")
 }
 
+function showCards() {
+    for (i = 0; i < playerHand.length; i++) {
+        let image = document.createElement("img")
+        image.className = ("col-md-3")
+        image.classList.add("player-image")
+        image.src = `card_deck/${playerHand[i].printCard}.png`
+        showPlayerCards.appendChild(image)
+    }
+    for (i = 0; i < bankerHand.length; i++) {
+        let image = document.createElement("img")
+        image.className = ("col-md-3")
+        image.classList.add("banker-image")
+        image.src = `card_deck/${bankerHand[i].printCard}.png`
+        showBankerCards.appendChild(image)
+    }
+}
+
+
 //----------------------------------------------------------------------------------//
 
 // Play Button
@@ -345,7 +372,6 @@ playBtn.addEventListener("click", event => {
     playBtn.disabled = true
     showChips.innerText = "$" + chipsTotal
 })
-
 
 // Deal Button
 dealBtn.addEventListener("click", dealCard)
@@ -391,6 +417,6 @@ function chipsInfo() {
 
 // chipsInfo()
 // dealCard()
-// // gameInfo()
+// gameInfo()
 // chipsInfo()
 

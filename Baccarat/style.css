@@ -18,3 +18,11 @@ table, th, td {
 .input-group .input-group-text {
     width: 100%;
 }
+
+#vertical-line {
+    border-left: 5px solid yellow;
+    height: 100px;
+    margin: 5px;
+    position: relative;
+    display: inline-block;
+}

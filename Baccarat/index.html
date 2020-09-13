@@ -16,18 +16,16 @@
 
   <body>
 
-    <!-- Cards container -->
+    
     <div class="container">
-      <div class="row justify-content-md-center">
-        <div class="col col-lg-2">
-          <div> 1 of 3</div>
-        </div>
-        <div class="col-md-auto">
-          Line Break
-        </div>
-        <div class="col col-lg-2">
-          3 of 3
-        </div>
+
+      <!-- Cards container -->
+      <div class="row">
+        <div class="col-sm-6" id="bankerCards"></div>
+        <!-- <div class="col-md-auto">
+          <div id="vertical-line"></div>
+        </div> -->
+        <div class="col-sm-6" id="playerCards"></div>
       </div>
     
       <!-- Bet form -->
@@ -116,16 +114,12 @@
       </form>
 
 
-      <div class="card border-light mb-3" style="max-width: 18rem;">
+      <div class="card border-light mb-3 mx-auto" style="max-width: 18rem;">
         <div class="card-header font-weight-bold text-center" id="chip-header">Available Chips</div>
         <div class="card-body">
           <h5 class="card-title font-weight-bold text-center" id="chip-title"></h5>
         </div>
       </div>
-
-    
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Payout</button>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -176,11 +170,21 @@
       </div>
     </div>
 
-    <button type="button" class="btn btn-warning" id="restart-btn" disabled>Restart</button>
-
-    <button type="button" class="btn btn-light btn-lg" id="deal-btn" disabled>Deal</button>
-
-    <button type="button" class="btn btn-danger btn-lg" id="play-btn">Play</button>
+    <div class="row">
+      <div class="col">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Payout</button>
+      </div>
+      <div class="col">
+        <button type="button" class="btn btn-warning" id="restart-btn" disabled>Restart</button>
+      </div>
+      <div class="col">
+        <button type="button" class="btn btn-light btn-lg" id="deal-btn" disabled>Deal</button>
+      </div>
+      <div class="col">
+        <button type="button" class="btn btn-danger btn-lg" id="play-btn">Play</button>
+      </div>
+    </div>
 
   </div>
 
