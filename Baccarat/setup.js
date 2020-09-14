@@ -169,6 +169,9 @@ function checkNatural() {
         tieBet++
         playerNatural9++
         bankerNatural9++
+        showCards()
+        console.log("showCard activated")
+        finalTotalPoints()
     } else if (playerTotal === 8 && bankerTotal === 8) {
         resultTie = true
         bankerN8 = true
@@ -176,26 +179,41 @@ function checkNatural() {
         tieBet++
         playerNatural8++
         bankerNatural8++
+        showCards()
+        console.log("showCard activated")
+        finalTotalPoints()
     } else if (playerTotal === 9) {
         playerWin = true
         playerN9 = true
         playerBet++
         playerNatural9++
+        showCards()
+        console.log("showCard activated")
+        finalTotalPoints()
     } else if (bankerTotal === 9) {
         bankerWin = true
         bankerN9 = true
         bankerBet++
         bankerNatural9++
+        showCards()
+        console.log("showCard activated")
+        finalTotalPoints()
     } else if (playerTotal === 8) {
         playerWin = true
         playerN8 = true
         playerBet++
         playerNatural8++
+        showCards()
+        console.log("showCard activated")
+        finalTotalPoints()
     } else if (bankerTotal === 8) {
         bankerWin = true
         bankerN8 = true
         bankerBet++
         bankerNatural8++
+        showCards()
+        console.log("showCard activated")
+        finalTotalPoints()
     } else {
         drawThirdCards()
     }
@@ -457,8 +475,4 @@ function chipsInfo() {
     console.log(chipsTotal)
 }
 
-// chipsInfo()
-// dealCard()
-// gameInfo()
-// chipsInfo()
 
