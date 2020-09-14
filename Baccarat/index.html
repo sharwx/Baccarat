@@ -9,9 +9,11 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
     <title>Baccarat</title>
+
   </head>
 
   <body>
@@ -19,22 +21,35 @@
     
     <div class="container">
 
+      <h1>
+        <span class="black">&spades;</span>
+        <span class="red">&diams;</span>
+        Baccarat
+        <span class="black">&clubs;</span>
+        <span class="red">&hearts;</span>
+      </h1>
+
       <!-- Cards container -->
-      <div class="row">
+      <div class="row" id="card-div">
         <div class="col-sm-6" id="bankerCards"></div>
-        <!-- <div class="col-md-auto">
-          <div id="vertical-line"></div>
-        </div> -->
         <div class="col-sm-6" id="playerCards"></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6" id="banker-text">
+          <h3>Banker</h3>
+        </div>
+        <div class="col-sm-6" id="player-text">
+          <h3>Player</h3>
+        </div>      
       </div>
     
       <!-- Bet form -->
-      <form>
+      <form id="form-div">
         <div class="row">
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text">Banker</span>
+                <span class="input-group-text form-input">Banker</span>
               </div>
               <input type="number" value="0" min="0" max="1000" step="50" class="form-control" id="chipInput_B" placeholder="Amount">
             </div>
@@ -42,7 +57,7 @@
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text">Banker Pair</span>
+                <span class="input-group-text form-input">Banker Pair</span>
               </div>
               <input type="number" value="0" min="0" max="1000" step="50" class="form-control" id="chipInput_BP" placeholder="Amount">
             </div>
@@ -50,7 +65,7 @@
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text">Player</span>
+                <span class="input-group-text form-input">Player</span>
               </div>
               <input type="number" value="0" min="0" max="1000" step="50" class="form-control" id="chipInput_P" placeholder="Amount">
             </div>
@@ -61,7 +76,7 @@
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text">Banker Natural 8</span>
+                <span class="input-group-text form-input">Banker Natural 8</span>
               </div>
               <input type="number" value="0" min="0" max="1000" step="50" class="form-control" id="chipInput_BN8" placeholder="Amount" disabled>
             </div>
@@ -69,7 +84,7 @@
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text">Tie</span>
+                <span class="input-group-text form-input">Tie</span>
               </div>
               <input type="number" value="0" min="0" max="1000" step="50" class="form-control" id="chipInput_T" placeholder="Amount">
             </div>
@@ -77,7 +92,7 @@
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text">Player Natural 8</span>
+                <span class="input-group-text form-input">Player Natural 8</span>
               </div>
               <input type="number" value="0" min="0" max="1000" step="50" class="form-control" id="chipInput_PN8" placeholder="Amount" disabled>
             </div>
@@ -88,7 +103,7 @@
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text">Banker Natural 9</span>
+                <span class="input-group-text form-input">Banker Natural 9</span>
               </div>
               <input type="number" value="0" min="0" max="1000" step="50" class="form-control" id="chipInput_BN9" placeholder="Amount" disabled>
             </div>
@@ -96,7 +111,7 @@
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text">Player Pair</span>
+                <span class="input-group-text form-input">Player Pair</span>
               </div>
               <input type="number" value="0" min="0" max="1000" step="50" class="form-control" id="chipInput_PP" placeholder="Amount">
             </div>
@@ -104,7 +119,7 @@
           <div class="col">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
-                <span class="input-group-text">Player Natural 9</span>
+                <span class="input-group-text form-input">Player Natural 9</span>
               </div>
               <input type="number" value="0" min="0" max="1000" step="50" class="form-control" id="chipInput_PN9" placeholder="Amount" disabled>
             </div>
@@ -113,8 +128,8 @@
 
       </form>
 
-
-      <div class="card border-light mb-3 mx-auto" style="max-width: 18rem;">
+      <!-- Card -->
+      <div class="card border-light mb-3 mx-auto" id="card-display" style="max-width: 18rem;">
         <div class="card-header font-weight-bold text-center" id="chip-header">Available Chips</div>
         <div class="card-body">
           <h5 class="card-title font-weight-bold text-center" id="chip-title"></h5>
@@ -170,18 +185,14 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col">
+    <div class="row" id="buttons-div">
+      <div class="col" id="buttons-1">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Payout</button>
-      </div>
-      <div class="col">
         <button type="button" class="btn btn-warning" id="restart-btn" disabled>Restart</button>
       </div>
-      <div class="col">
+      <div class="col" id="buttons-2">
         <button type="button" class="btn btn-light btn-lg" id="deal-btn" disabled>Deal</button>
-      </div>
-      <div class="col">
         <button type="button" class="btn btn-danger btn-lg" id="play-btn">Play</button>
       </div>
     </div>

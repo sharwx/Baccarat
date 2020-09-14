@@ -1,9 +1,30 @@
 body {
-    background: rgb(42,100,36)
+    background: rgb(42,100,36);
 }
 
 .container {
-    margin: 0 auto;
+    margin: 20px auto;
+}
+
+h1 {
+    font-size: 50px;
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+    font-family: 'Great Vibes', cursive;
+}
+
+.black {
+    color: black;
+}
+
+.red {
+    color: red;
+}
+
+h3 {
+    color: white;
+    font-family: 'Great Vibes', cursive;
 }
 
 table, th, td {
@@ -17,12 +38,38 @@ table, th, td {
 }
 .input-group .input-group-text {
     width: 100%;
+    border-style: none;
 }
 
-#vertical-line {
-    border-left: 5px solid yellow;
-    height: 100px;
-    margin: 5px;
-    position: relative;
-    display: inline-block;
+.input-group .input-group-text .lightup {
+    width: 100%;
+    border-style: none;
+    background-color: #ffc107;
 }
+
+#card-div {
+    height: 180px;
+    text-align: center;
+}
+
+#banker-text, #player-text {
+    text-align: center;
+}
+
+#form-div {
+    margin: 20px;
+}
+
+#card-display {
+    height: 120px;
+}
+
+#buttons-div {
+    height: 50px;
+    margin:20px;
+}
+
+#buttons-2 {
+    text-align: right;
+}
+

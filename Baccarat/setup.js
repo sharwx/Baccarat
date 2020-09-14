@@ -6,6 +6,8 @@ let chipsTotal = 2000
 // Player Info
 let playerTotal = null
 let playerWin = false
+let playerN8 = false
+let playerN9 = false
 let playerPairWin = false
 let playerHand = []
 let playerTotalCards = 0
@@ -13,6 +15,8 @@ let playerTotalCards = 0
 // Banker Info
 let bankerTotal = null
 let bankerWin = false
+let bankerN9 = false
+let bankerN8 = false
 let bankerPairWin = false
 let bankerHand = []
 let bankerTotalCards = 0
@@ -120,6 +124,10 @@ function discardHand() {
         let removePlayerCards = document.getElementsByClassName("banker-image")[i]
         removePlayerCards.parentNode.removeChild(removePlayerCards)
     }
+    for (let i = 0; i < 9; i++) {
+        let removeLightUp = document.getElementsByClassName("form-input")[i]
+        removeLightUp.style.backgroundColor = ""
+    }
 }
 
 //----------------------------------------------------------------------------------//
@@ -156,28 +164,36 @@ function checkNatural() {
     console.log("checkNatural activated")
     if (playerTotal === 9 && bankerTotal === 9) {
         resultTie = true
+        bankerN9 = true
+        playerN9 = true
         tieBet++
         playerNatural9++
         bankerNatural9++
     } else if (playerTotal === 8 && bankerTotal === 8) {
         resultTie = true
+        bankerN8 = true
+        playerN8 = true
         tieBet++
         playerNatural8++
         bankerNatural8++
     } else if (playerTotal === 9) {
         playerWin = true
+        playerN9 = true
         playerBet++
         playerNatural9++
     } else if (bankerTotal === 9) {
         bankerWin = true
+        bankerN9 = true
         bankerBet++
         bankerNatural9++
-    } else if (playerTotal === 8 && bankerTotal < 8) {
+    } else if (playerTotal === 8) {
         playerWin = true
+        playerN8 = true
         playerBet++
         playerNatural8++
-    } else if (bankerTotal === 8 && playerTotal < 8) {
+    } else if (bankerTotal === 8) {
         bankerWin = true
+        bankerN8 = true
         bankerBet++
         bankerNatural8++
     } else {
@@ -270,23 +286,44 @@ function chipsCount() {
     showChips.innerText = "$" + chipsTotal
     if (playerPairWin === true) {
         chipsTotal += (chipInput_PP * playerPairBet * 12)
+        let winLightUp = document.getElementsByClassName("form-input")[7]
+        winLightUp.style.backgroundColor = "#ffc107"
     }
     if (bankerPairWin === true) {
         chipsTotal += (chipInput_BP * bankerPairBet * 12)
+        let winLightUp = document.getElementsByClassName("form-input")[1]
+        winLightUp.style.backgroundColor = "#ffc107"
     }
-    if (playerTotal === 9 || playerTotal === 8) {
+    if (playerN9 === true) {
         chipsTotal += (chipInput_PN9 * playerNatural9 * 9)
+        let winLightUp = document.getElementsByClassName("form-input")[8]
+        winLightUp.style.backgroundColor = "#ffc107"
+    } else if (playerN8 === true) {
         chipsTotal += (chipInput_PN8 * playerNatural8 * 9)
-    } else if (bankerTotal === 9 || bankerTotal === 8) {
+        let winLightUp = document.getElementsByClassName("form-input")[5]
+        winLightUp.style.backgroundColor = "#ffc107"
+    }
+    if (bankerN9 === true) {
         chipsTotal += (chipInput_BN9 * bankerNatural9 * 9)
+        let winLightUp = document.getElementsByClassName("form-input")[6]
+        winLightUp.style.backgroundColor = "#ffc107"
+    } else if (bankerN8 === true) {
         chipsTotal += (chipInput_BN8 * bankerNatural8 * 9)
+        let winLightUp = document.getElementsByClassName("form-input")[3]
+        winLightUp.style.backgroundColor = "#ffc107"
     }
     if (playerWin === true) {
         chipsTotal += (chipInput_P * playerBet * 2)
+        let winLightUp = document.getElementsByClassName("form-input")[2]
+        winLightUp.style.backgroundColor = "#ffc107"
     } else if (bankerWin === true) {
         chipsTotal += (chipInput_B * bankerBet * 2)
+        let winLightUp = document.getElementsByClassName("form-input")[0]
+        winLightUp.style.backgroundColor = "#ffc107"
     } else if (resultTie === true) {
         chipsTotal += (chipInput_T * tieBet * 9)
+        let winLightUp = document.getElementsByClassName("form-input")[4]
+        winLightUp.style.backgroundColor = "#ffc107"
     }
     showChips.innerText = ""
     showChips.innerText = "$" + chipsTotal
@@ -312,6 +349,10 @@ function chipsCountReset() {
     resultTie = false
     playerPairWin = false
     bankerPairWin = false
+    playerN8 = false
+    playerN9 = false
+    bankerN8 = false
+    bankerN9 = false
 
     document.getElementById("chipInput_PP").value = 0
     document.getElementById("chipInput_BP").value = 0
@@ -342,6 +383,7 @@ function stopTheGame() {
 
 function restartGame() {
     chipsTotal = 2000
+    showChips.innerText = "$" + chipsTotal
     console.log("2000 added")
 }
 
