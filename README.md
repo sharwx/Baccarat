@@ -50,5 +50,5 @@ Betting includes "Player", "Banker", "Tie", "Player Pair", "Banker Pair", "Playe
 
 ## Credits
 
-[Card images:] (http://acbl.mybigcommerce.com/52-playing-cards/)<br/>
-[Gameplay instructions:] (https://www.cra.gov.sg/docs/default-source/game-rule-documents/mbs/mbs-0620001-power-baccarat-98-game-rules_cra-ver-4.pdf#:~:text=%E2%80%9CNatural%E2%80%9D%20means%20a%20point%20total,or%20two%20Q'%20s).)
+Card images: http://acbl.mybigcommerce.com/52-playing-cards/<br/>
+Gameplay instructions: https://www.cra.gov.sg/docs/default-source/game-rule-documents/mbs/mbs-0620001-power-baccarat-98-game-rules_cra-ver-4.pdf#:~:text=%E2%80%9CNatural%E2%80%9D%20means%20a%20point%20total,or%20two%20Q'%20s).
