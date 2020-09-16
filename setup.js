@@ -316,7 +316,8 @@ function chipsCount() {
         chipsTotal += (chipInput_PN9 * playerNatural9 * 9)
         let winLightUp = document.getElementsByClassName("form-input")[8]
         winLightUp.style.backgroundColor = "#ffc107"
-    } else if (playerN8 === true) {
+    }
+    if (playerN8 === true) {
         chipsTotal += (chipInput_PN8 * playerNatural8 * 9)
         let winLightUp = document.getElementsByClassName("form-input")[5]
         winLightUp.style.backgroundColor = "#ffc107"
@@ -325,7 +326,8 @@ function chipsCount() {
         chipsTotal += (chipInput_BN9 * bankerNatural9 * 9)
         let winLightUp = document.getElementsByClassName("form-input")[6]
         winLightUp.style.backgroundColor = "#ffc107"
-    } else if (bankerN8 === true) {
+    } 
+    if (bankerN8 === true) {
         chipsTotal += (chipInput_BN8 * bankerNatural8 * 9)
         let winLightUp = document.getElementsByClassName("form-input")[3]
         winLightUp.style.backgroundColor = "#ffc107"
@@ -334,11 +336,13 @@ function chipsCount() {
         chipsTotal += (chipInput_P * playerBet * 2)
         let winLightUp = document.getElementsByClassName("form-input")[2]
         winLightUp.style.backgroundColor = "#ffc107"
-    } else if (bankerWin === true) {
+    } 
+    if (bankerWin === true) {
         chipsTotal += (chipInput_B * bankerBet * 2)
         let winLightUp = document.getElementsByClassName("form-input")[0]
         winLightUp.style.backgroundColor = "#ffc107"
-    } else if (resultTie === true) {
+    } 
+    if (resultTie === true) {
         chipsTotal += (chipInput_T * tieBet * 9)
         let winLightUp = document.getElementsByClassName("form-input")[4]
         winLightUp.style.backgroundColor = "#ffc107"
